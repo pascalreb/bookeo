@@ -8,24 +8,32 @@ class Controller
 {
     public function route(): void 
     {
-        //isset définit bien que controller est bien dans l'url
-        if (isset($_GET['controller'])) {
-            switch ($_GET['controller']) {
-                case 'page':
-                    //On charge le controller page
-                    $pageController = new PageController();
-                    $pageController->route();
-                    break;
-                case 'book':
-                    //On charge le controller book
-                    var_dump('On charge BookController');
-                    break;
-                default:
-                    //Erreur
-                    break;
-            } 
-        } else {
-            //On charge la page d'accueil
+        try {
+            //isset définit bien que controller est bien dans l'url
+            if (isset($_GET['controller'])) {
+                switch ($_GET['controller']) {
+                    case 'page':
+                        //On charge le controller page
+                        $pageController = new PageController();
+                        $pageController->route();
+                        break;
+                    case 'book':
+                        //On charge le controller book
+                        $pageController = new BookController();
+                        $pageController->route();
+                        break;
+                    default:
+                        throw new \Exception("Le controller n'existe pas.");
+                        break;
+                } 
+            } else {
+                $pageController = new PageController();
+                $pageController->home();
+            }
+        } catch (\Exception $e) {
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 
@@ -45,7 +53,9 @@ class Controller
             }
 
         } catch(\Exception $e) {
-            echo $e->getMessage();
+            $this->render('errors/default', [
+                'error' => $e->getMessage(),
+            ]);
         }
     }
 }
