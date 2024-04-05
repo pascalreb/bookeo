@@ -1,3 +1,13 @@
+<?php
+   
+    $mainMenu = [
+        '/accueil/' => 'Accueil',
+        '/a_propos/' => 'A propos',
+    ];
+
+    $currentURL = rtrim($_SERVER['REQUEST_URI'], '/'); // Nettoie l'URL actuelle
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,12 +15,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Bookeo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+    crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/override-bootstrap.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-    <title>Document</title>
 </head>
 
 <body>
@@ -19,16 +28,18 @@
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
             <div class="col-md-3 mb-2 mb-md-0">
                 <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-                    <img src="assets/images/logo-bookeo.jpg" alt="logo-bookeo" width="90">
+                    <img src="/assets/images/logo-bookeo.jpg" alt="logo-bookeo" width="90">
                 </a>
             </div>
 
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-                <li><a href="#" class="nav-link px-2">Features</a></li>
-                <li><a href="#" class="nav-link px-2">Pricing</a></li>
-                <li><a href="#" class="nav-link px-2">FAQs</a></li>
-                <li><a href="#" class="nav-link px-2">About</a></li>
+            <ul class="nav nav-pills">
+                <?php foreach ($mainMenu as $page => $titre) { ?>
+                    <li class="nav-item">
+                        <a href="<?= $page; ?>" 
+                            class="nav-link <?php if ($_SERVER['REQUEST_URI'] === $page) { echo 'active'; } ?>"><?= $titre; ?>
+                        </a>
+                    </li>
+                <?php } ?>  
             </ul>
 
             <div class="col-md-3 text-end">

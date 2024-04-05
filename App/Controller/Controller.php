@@ -23,7 +23,7 @@ class Controller
                         $pageController->route();
                         break;
                     default:
-                        throw new \Exception("Le controller n'existe pas.");
+                        throw new \Exception("Le contrôleur n'existe pas.");
                         break;
                 } 
             } else {
